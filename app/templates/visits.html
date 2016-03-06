@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% set animal, breed, species, owner = animal_data %}
+    <hr/>
+    <h3>Owner</h3>
+    <div>
+      {{ owner.first_name | upper}} {{ owner.last_name | upper}} [{{ owner.id }}],
+      {{ owner.phone }},
+      {{ owner.phone2 }},
+      {{ owner.email }},
+      [{{ owner.zip }} {{ owner.city }} --- {{ owner.street}}],
+      {{ owner.nip }},
+    </div>
+    <hr/>
+    <h3>Animal</h3>
+    <div>
+      {{ animal.name | upper}} [{{ animal.id}}], 
+      {% if animal.sex == None %}
+         <b> ? </b>, 
+      {% else %}
+         <b> {{ animal.sex }}</b>, 
+      {% endif %}
+
+      {{ species.name }}[{{ species.id }}]_{{ breed.name }}[{{ animal.breed_id }}],
+      {{ animal.color }},
+      {{ animal.birth }},
+      "{{ animal.note }}"
+    </div>
+    <hr/>
+    <h3>Visits</h3>
+    {% for visit, vet in visits %}
+    <div>
+       <b>{{ visit.date }} ({{ visit.id }}) - {{ vet.title|lower}} {{ vet.first_name|capitalize }} {{ vet.last_name|upper }}</b>
+       <br/>
+       {{ visit.description | nl2br }}
+    </div>
+    <hr/>
+    {% endfor %}
+
+{% endblock %}

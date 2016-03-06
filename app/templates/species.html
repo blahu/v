@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for species in species.items %}
+    <p>
+      {{ species.name | upper}} [{{ species.id}}], 
+    </p>
+    {% endfor %}
+
+    {% if species.has_prev %}<a href="{{ url_for('species', page=species.prev_num) }}">&lt;&lt;</a>{% else %} &lt;&lt; {% endif %} 
+    {{ species.page }} / {{ species.pages }}
+    {% if species.has_next %}<a href="{{ url_for('species', page=species.next_num) }}">&gt;&gt;</a>{% else %} &gt;&gt; {% endif %}
+
+{% endblock %}

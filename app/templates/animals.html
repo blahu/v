@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for animal,breed,species,owner in animals.items %}
+    <p>
+      {{ animal.name | upper}} [{{ animal.id}}], 
+      {% if animal.sex == None %}
+         <b> ? </b>, 
+      {% else %}
+         <b> {{ animal.sex }}</b>, 
+      {% endif %}
+
+      {{ species.name }}[{{ species.id }}]_{{ breed.name }}[{{ animal.breed_id }}],
+      {{ animal.color }},
+      {{ owner.first_name | upper}} {{ owner.last_name | upper}} [{{ animal.owner_id }}],
+      {{ animal.birth }},
+      "{{ animal.note }}"
+      <a href="{{ url_for('visits', animal=animal.id) }}">Visits</a>
+    </p>
+    {% endfor %}
+
+    {% if animals.has_prev %}<a href="{{ url_for('animals', page=animals.prev_num) }}">&lt;&lt;</a>{% else %} &lt;&lt; {% endif %} 
+    {{ animals.page }} / {{ animals.pages }}
+    {% if animals.has_next %}<a href="{{ url_for('animals', page=animals.next_num) }}">&gt;&gt;</a>{% else %} &gt;&gt; {% endif %}
+
+{% endblock %}

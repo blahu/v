@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for owner in owners.items %}
+    <p>
+      {{ owner.first_name | upper}} {{ owner.last_name | upper}} [{{ owner.id }}],
+      {{ owner.phone }},
+      {{ owner.phone2 }},
+      {{ owner.email }},
+      [{{ owner.zip }} {{ owner.city }} --- {{ owner.street}}],
+      {{ owner.nip }},
+    </p>
+    {% endfor %}
+
+    {% if owners.has_prev %}<a href="{{ url_for('owners', page=owners.prev_num) }}">&lt;&lt;</a>{% else %} &lt;&lt; {% endif %} 
+    {{ owners.page }} / {{ owners.pages }}
+    {% if owners.has_next %}<a href="{{ url_for('owners', page=owners.next_num) }}">&gt;&gt;</a>{% else %} &gt;&gt; {% endif %}
+
+{% endblock %}

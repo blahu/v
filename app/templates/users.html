@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    {% for user in users.items %}
+    <p>
+      {{ user.user_name | lower}},
+      {{ user.role }},
+      {{ user.email }},
+    </p>
+    {% endfor %}
+
+    {% if users.has_prev %}<a href="{{ url_for('users', page=users.prev_num) }}">&lt;&lt;</a>{% else %} &lt;&lt; {% endif %} 
+    {{ users.page }} / {{ users.pages }}
+    {% if users.has_next %}<a href="{{ url_for('users', page=users.next_num) }}">&gt;&gt;</a>{% else %} &gt;&gt; {% endif %}
+
+{% endblock %}

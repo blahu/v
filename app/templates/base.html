@@ -1,0 +1,31 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title | decode_utf8 }} - vetclinic</title>
+    {% else %}
+    <title>vetclinic</title>
+    {% endif %}
+  </head>
+  <body>
+    <div>vetclinic: 
+      <a href="/index">Home</a>
+      <a href="/animals/">Animals</a>
+      <a href="/species/">Species</a>
+      <a href="/breeds/">Breeds</a>
+      <a href="/owners/">Owners</a>
+      <a href="/vets/">Vets</a>
+      <a href="/users/">Users</a>
+    </div>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }} </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </body>
+</html>
