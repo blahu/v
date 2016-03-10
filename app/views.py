@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, g
+from flask import render_template, url_for, flash, g, redirect
 from flask.ext.sqlalchemy import get_debug_queries
 from flask.ext.login import current_user, login_required
 from app import app, db, login_manager
@@ -12,7 +12,6 @@ from .models import (
      get_all_users,
 )
 
-
 from config import ITEMS_PER_PAGE
 
 @login_manager.user_loader
@@ -25,9 +24,16 @@ def before_request():
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
-    return "Hello, World to {} {}!".format(g.user.first_name, g.user.last_name)
+    if current_user.is_authenticated:
+        # user authenticated,redirect to /animals
+        flash("Hello, World to {} {}!".format(g.user.first_name, g.user.last_name))
+        return redirect(url_for('animals'))
+    else:
+        # non-authenticated -> redirect to login
+        flash("Please login!")
+        return redirect(url_for('auth.login'))
+
 
 @app.route('/animals')
 @app.route('/animals/')
