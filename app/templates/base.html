@@ -7,18 +7,27 @@
     {% endif %}
   </head>
   <body>
-    <div>vetclinic: 
-{% if current_user.is_authenticated %}
-      <a href="{{ url_for('index') }}">HOME</a>
-      <a href="{{ url_for('owners') }}">OWNERS</a>
-      <a href="{{ url_for('animals') }}">ANIMALS</a>
-      <a href="{{ url_for('species') }}">SPECIES</a>
-      <a href="{{ url_for('breeds') }}">BREEDS</a>
-      <a href="{{ url_for('vets') }}">VETS</a>
-    </div>
-      <a href="{{ url_for('auth.logout') }}">LOGOUT</a>
-{% endif %}
     <div>
+      <a href="{{ url_for('index') }}">HOME</a>
+    </div>
+{% if current_user.is_authenticated %}
+    <div>
+      <ul>
+        <li><a href="{{ url_for('owners') }}">OWNERS</a></li>
+        <li><a href="{{ url_for('animals') }}">ANIMALS</a></li>
+        <li><a href="{{ url_for('species') }}">SPECIES</a></li>
+        <li><a href="{{ url_for('breeds') }}">BREEDS</a></li>
+{% if current_user.is_admin %}
+        <li><a href="{{ url_for('vets') }}">VETS</a></li>
+{% endif %}
+      </ul>
+      <ul>
+      {% set vet = current_user %}
+       <li>{{ vet.title | lower }} {{ vet.first_name | capitalize }} {{ vet.last_name | upper}} [{{ vet.id }}] </li>
+       <li><a href="{{ url_for('auth.logout') }}">LOGOUT</a></li>
+      </ul>
+{% endif %}
+    </div>
 
     <hr>
     {% with messages = get_flashed_messages() %}

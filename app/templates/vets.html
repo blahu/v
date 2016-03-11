@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
+    <ul>
     {% for vet in vets.items %}
-    <p>
+    <li>
       {{ vet.title | lower }},
       {{ vet.first_name | capitalize }} {{ vet.last_name | upper}} [{{ vet.id }}],
       {{ vet.login_name }},
-      "{{ vet.xxx }}",
-    </p>
+      {{ vet.is_admin }},
+      {{ vet.last_failed_login }},
+      {{ vet.last_good_login }},
+    </li>
     {% endfor %}
+    </ul>
 
     {% if vets.has_prev %}<a href="{{ url_for('vets', page=vets.prev_num) }}">&lt;&lt;</a>{% else %} &lt;&lt; {% endif %} 
     {{ vets.page }} / {{ vets.pages }}

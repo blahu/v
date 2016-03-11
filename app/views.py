@@ -99,23 +99,32 @@ def visits(animal=1):
 @app.route('/users/<int:page>')
 @login_required
 def users(page=1):
-    users = get_all_users().paginate(page, ITEMS_PER_PAGE, False)
-    for q in get_debug_queries():
-	flash(q)
-    return render_template("users.html",
-                           title='Users',
-                           users=users)
+    if current_user.is_admin:
+        users = get_all_users().paginate(page, ITEMS_PER_PAGE, False)
+        for q in get_debug_queries():
+	    flash(q)
+        return render_template("users.html",
+                               title='Users',
+                               users=users)
+    else:
+	flash("Not authorized!")
+        return redirect(url_for('index'))
+ 
 
 @app.route('/vets/')
 @app.route('/vets/<int:page>')
 @login_required
 def vets(page=1):
-    vets = get_all_vets().paginate(page, ITEMS_PER_PAGE, False)
-    for q in get_debug_queries():
-	flash(q)
-    return render_template("vets.html",
-                           title='Vets',
-                           vets=vets)
+    if current_user.is_admin:
+        vets = get_all_vets().paginate(page, ITEMS_PER_PAGE, False)
+        for q in get_debug_queries():
+	    flash(q)
+        return render_template("vets.html",
+                               title='Vets',
+                               vets=vets)
+    else:
+	flash("Not authorized!")
+        return redirect(url_for('index'))
 
 ## ===================================
 ## SNIPETS

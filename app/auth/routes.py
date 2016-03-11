@@ -30,7 +30,7 @@ def login():
                db.session.add(vet)
                db.session.commit()
              
-	       lash('Invalid login name or password.')
+	       flash('Invalid login name or password.')
                return redirect(url_for('.login'))
 
         # login successful
